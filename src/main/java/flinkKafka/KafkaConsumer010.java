@@ -19,22 +19,14 @@ public class KafkaConsumer010 {
         pro.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG,"earliest");
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 		 
-		DataStream<String> input = env
-				.addSource(
-						new FlinkKafkaConsumer010<String>(
+		DataStream<String> input = env.addSource(new FlinkKafkaConsumer010<String>(
 								"abc",
 								new SimpleStringSchema(),
 								pro) ) ;
-
-
 		input.print();
-
-
-		input.addSink(
-				new FlinkKafkaProducer010<String>( "bcd",
+		input.addSink(new FlinkKafkaProducer010<String>( "bcd",
 						new SimpleStringSchema(),
 						pro));
-
 		env.execute("Kafka 0.10 Example");
 	}
 }
